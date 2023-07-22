@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+
+@font-face { 
+    font-family: "taikoLight";
+    src: url("./Assets/fonts/SDKukdetopokki-aLt.otf");
+}
+
+@font-face { 
+    font-family: "taikoBold";
+    src: url("./Assets/fonts/SDKukdetopokki-bBd.otf");
+}
