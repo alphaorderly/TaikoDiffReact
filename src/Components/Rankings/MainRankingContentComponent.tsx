@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Ranks, difficultyColor } from '../../States/Ranks';
+import { Difficulty, Ranks, difficultyColor } from '../../States/Ranks';
 import { useRecoilState } from 'recoil';
-import MainRankingSimpleSong from './MainRankingSingleSong';
+import MainRankingSingleSong from './MainRankingSingleSong';
 
 type Prop = {
     level: number,
-    difficulty: string,
+    difficulty: Difficulty,
 }
 
 const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
@@ -16,14 +16,16 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
     return (
         <MainDiv>
             <DiffDiv color={difficultyColor[props.difficulty] + "88"}>
-                <DiffTitle>{props.difficulty}</DiffTitle>
+                <DiffTitle>{Difficulty[props.difficulty]}</DiffTitle>
             </DiffDiv>
             <DiffContent>
                 {
-                    currentRank[props.level].rank[props.difficulty].map((item, index) => {
-                        return (
-                            <MainRankingSimpleSong key={props.level + props.difficulty + "no." + index} difficulty={props.difficulty} level={props.level} index={index}/>
-                        )
+                    currentRank.map((item, index) => {
+                        if(item.difficulty == props.difficulty && item.level == props.level) {
+                            return <MainRankingSingleSong index={index} />
+                        } else {
+                            return null;
+                        }
                     })
                 }
             </DiffContent>
@@ -37,7 +39,7 @@ const MainDiv = styled.div`
 
 const DiffDiv = styled.div`
     display: flex;
-    width: 100px;
+    width: 150px;
     height: 40px;
     position: relative;
     background: ${props => props.color || 'white'};
@@ -68,6 +70,9 @@ const DiffContent = styled.div`
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 `
 
 export default MainRankingContentComponent;

@@ -12,13 +12,13 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
                 태고의 달인 ⭐{props.level} 난이도 표
             </Title>
             <Info>
-                아래의 곡을 드래그/드랍해 난이도를 직접 조정할수 있습니다.
-            </Info>
-            <Info>
-                개인차 / 풀콤보 난이도 또한 클릭을 통해 껐다 켤수 있습니다.
-            </Info>
-            <Info>
                 한국어 제목의 오른쪽 아이콘 클릭시 영상이 있을시에 한해 전량 영상으로 연결됩니다.
+            </Info>
+            <Info>
+                현재 상태를 클릭시 미클리어, 클리어, 풀콤, 전량 순으로 바뀝니다.
+            </Info>
+            <Info>
+                비 로그인시 클리어 상태는 저장되지 않습니다.
             </Info>
         </MainDiv>
     )

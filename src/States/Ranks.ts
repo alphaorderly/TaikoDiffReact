@@ -1,6 +1,9 @@
 // 난이도 표 정보를 저장하는 상태입니다.
 
 import {atom} from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+// 장르, 난이도에 대한 enum type
 
 export enum Genre {
     팝,
@@ -13,18 +16,46 @@ export enum Genre {
     남코오리지널,
 }
 
-export const difficultyColor: { [props: string]: string } = {
-    "졸업+" : "#800380",
-    "졸업" : "#b70e52",
-    "최상" : "#ed1c24",
-    "상" : "#fe7f28",
-    "중상" : "#fec90e",
-    "중" : "#22b14c",
-    "중하" : "#0fa238",
-    "하" : "#a349a4",
-    "최하" : "#484848",
-    "보류" : "#000000",
+export enum Difficulty {
+    졸업플러스,
+    졸업,
+    최상,
+    상,
+    중상,
+    중,
+    중하,
+    하,
+    최하,
+    보류,
 }
+
+export enum ClearStatus {
+    미클리어,
+    클리어,
+    풀콤,
+    전량
+}
+
+// 난이도별 색상
+export const difficultyColor: { [props: number]: string } = {
+    0 : "#800380",
+    1 : "#b70e52",
+    2 : "#ed1c24",
+    3 : "#fe7f28",
+    4 : "#fec90e",
+    5 : "#22b14c",
+    6 : "#0fa238",
+    7 : "#a349a4",
+    8 : "#484848",
+    9 : "#000000",
+}
+
+// 레벨별 난이도 리스트
+export const DifficultyList: {[props: number]: Difficulty[]} = {
+    10 : [Difficulty.졸업플러스, Difficulty.졸업, Difficulty.최상, Difficulty.상, Difficulty.중상, Difficulty.중, Difficulty.중하, Difficulty.하, Difficulty.최하, Difficulty.보류]
+}
+
+// Recoil State / Type
 
 export type Song = {
     jpnTitle: string,
@@ -35,76 +66,64 @@ export type Song = {
         double: boolean     // 2인용,
         first: boolean      // 초견 어려움 - 초록색
     },
-    playVideo?: string,      // 전량 영상,
+    playVideo?: string,     // 전량 영상,
     genre: Genre[],         // 장르
     ura: boolean,           // 뒷보면 여부
-}
-
-export type RankElement = {
-    [props: string]: Song[],
-}
-
-export type Rank = {
-    [props: number]: {
-        rank: RankElement,
-        finalRevision: Date 
-    }     
+    difficulty: Difficulty, // 난이도
+    level: number,          // 레벨
+    clear: ClearStatus    // 현재 상태
 }
 
 /*
-복붙용 예시
 {
     jpnTitle: "",
     korTitle: "",
     info: {
-        personal: ,
-        hardFC: ,
-        double: ,
-        first: ,
+        personal:,  
+        hardFC:,   
+        double:,  
+        first:,  
     },
-    genre: [],
-    ura: ,
+    genre: [],         
+    ura:,          
+    difficulty: Difficulty.,
+    clear: ClearStatus.미클리어,
+    level:,       
 }
 */
 
-export const Ranks = atom<Rank>(
+export const defaultRank: Song[] = [
+    {
+        jpnTitle: "彁",
+        korTitle: "가",
+        info: {
+            personal:false,  
+            hardFC: false,   
+            double: false,  
+            first:  true,  
+        },
+        genre: [Genre.남코오리지널],         
+        ura: true,          
+        difficulty: Difficulty.졸업플러스,
+        clear: ClearStatus.미클리어,
+        level: 10,       
+    },
+];
+
+export const Ranks = atom<Song[]>(
     { 
         key: 'Ranks',
-        default: {
-            10: {
-                rank: {
-                    "졸업+": [
-                        {
-                            jpnTitle: "彁",
-                            korTitle: "가",
-                            info: {
-                                personal: false,
-                                hardFC: false,
-                                double: false,
-                                first: true,
-                            },
-                            playVideo: "https://www.youtube.com/watch?v=LI1TZONsLag",
-                            genre: [Genre.남코오리지널],
-                            ura: true,
-                        }
-                    ],
-                    "졸업": [
-                        {
-                            jpnTitle: "ダンガンノーツ",
-                            korTitle: "탄환노트",
-                            info: {
-                                personal: false,
-                                hardFC: false,
-                                double: false,
-                                first: false,
-                            },
-                            genre: [Genre.남코오리지널],
-                            ura: true,
-                        }
-                    ]
-                },
-                finalRevision: new Date(2023, 7, 12)
-            }
-        }
+        default: defaultRank,
     }
 )
+
+// 백엔드 전송용 타입
+
+export type clearedType = {
+    code: string,                       // 곡 구분을 위한 코드, 일본어 곡제목 + ",ura:" + 우라여부 로 이루어진다.
+    cleared: ClearStatus
+}
+
+export const codeGeneration = (song: Song): string => {
+    return song.jpnTitle + ",ura:" + song.ura;
+}
