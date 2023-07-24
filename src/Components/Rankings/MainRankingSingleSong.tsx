@@ -94,6 +94,9 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
             </TopDiv>
             <InfoDiv>
                 <Stat 
+                    color={"#6a49ff".concat(ranks[props.index].info.double ? "FF" : "33")}
+                >2인 보면</Stat>
+                <Stat 
                     color={"#ed1c24".concat(ranks[props.index].info.personal ? "FF" : "33")}
                 >개인차</Stat>
                 <Stat 
