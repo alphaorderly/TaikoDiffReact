@@ -1794,6 +1794,21 @@ export const defaultRank: Song[] = [
         level: 10,       
     },
     {
+        jpnTitle: "Scarlet Lance",
+        korTitle: "스칼렛 랜스",
+        info: {
+            personal:false,  
+            hardFC:true,   
+            double:false,  
+            first:false,  
+        },
+        genre: [Genre.게임뮤직],         
+        ura:false,          
+        difficulty: Difficulty.중상,
+        clear: ClearStatus.미클리어,
+        level: 10,       
+    },
+    {
         jpnTitle: "怒槌",
         korTitle: "분노의 망치",
         info: {
