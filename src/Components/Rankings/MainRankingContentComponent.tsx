@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Difficulty, Ranks, difficultyColor } from '../../States/Ranks';
+import {  Ranks } from '../../States/Ranks';
 import { useRecoilState } from 'recoil';
 import MainRankingSingleSong from './MainRankingSingleSong';
+import { Difficulty, difficultyColor } from '../../Consts/Songs';
 
 type Prop = {
     level: number,
     difficulty: Difficulty,
+    searchTag: string
 }
 
 const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
@@ -21,7 +23,9 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
             <DiffContent>
                 {
                     currentRank.map((item, index) => {
-                        if(item.difficulty == props.difficulty && item.level == props.level) {
+                        if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0) {
+                            return <MainRankingSingleSong index={index} />
+                        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.includes(props.searchTag) || item.korTitle?.includes(props.searchTag))) {
                             return <MainRankingSingleSong index={index} />
                         } else {
                             return null;

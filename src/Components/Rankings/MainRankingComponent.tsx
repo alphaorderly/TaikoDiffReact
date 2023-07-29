@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MainRankingHeaderComponent from './MainRankingHeaderComponent';
 import { useRecoilState } from 'recoil';
-import { DifficultyList, Ranks, Song, clearedType, codeGeneration, defaultRank } from '../../States/Ranks';
+import {  Ranks, clearedType, codeGeneration } from '../../States/Ranks';
 import MainRankingContentComponent from './MainRankingContentComponent';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import User from '../../States/User';
 import { child, get, ref, set } from 'firebase/database';
 import { db } from '../../Backend/Firebase';
 import HashLoader from 'react-spinners/HashLoader';
+import { DifficultyList } from '../../Consts/Songs';
 
 const MainRankingComponent: React.FC = () => {
 
@@ -19,6 +20,8 @@ const MainRankingComponent: React.FC = () => {
     const [user, setUser] = useRecoilState(User);
 
     const [loading, setLoading] = useState(false);
+
+    const [search, setSearch] = useState<string>("");
 
     useEffect(() => {
         const auth = getAuth();
@@ -82,11 +85,12 @@ const MainRankingComponent: React.FC = () => {
 
     return (
         <MainDiv>
+            <SearchBar value={search} onChange={text => setSearch(text.target.value)}/>
             <MainRankingHeaderComponent level={currentLevel} />
-            <ContentDiv>
+            <ContentDiv id="captureDiv">
                 {
                     DifficultyList[currentLevel].map((difficulty) => {
-                        return <MainRankingContentComponent difficulty={difficulty} level={currentLevel}/>
+                        return <MainRankingContentComponent searchTag={search} difficulty={difficulty} level={currentLevel}/>
                     })
                 }
             </ContentDiv>
@@ -96,6 +100,19 @@ const MainRankingComponent: React.FC = () => {
 
 const MainDiv = styled.div`
     width: 100%;
+`
+
+const SearchBar = styled.input`
+    width: 100%;
+    height: 30px;
+    padding: 2px 10px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 15px;
+    resize: none;
+    border: none;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.45) inset;
+    vertical-align: middle;
+    font-family: rocknroll taikoLight;
 `
 
 const ContentDiv = styled.div`

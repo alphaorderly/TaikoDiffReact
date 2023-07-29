@@ -1,11 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Genre, genreColor } from '../../Consts/Songs';
+import html2canvas from 'html2canvas';
 
 type Prop = {
     level: number,
 }
 
 const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
+    
+    const onSaveAs = (uri: string, filename: string) => {
+		console.log('onSaveAs');
+		var link = document.createElement('a');
+		document.body.appendChild(link);
+		link.href = uri;
+		link.download = filename;
+		link.click();
+		document.body.removeChild(link);
+	};
+
+    const onCapture = () => {
+		html2canvas(document.getElementById('captureDiv')!).then(canvas => {
+			onSaveAs(canvas.toDataURL('image/png'), 'taiko-result.png')
+		});
+	};
+
+
     return (
         <MainDiv>
             <Title>
@@ -20,6 +40,18 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
             <Info>
                 비 로그인시 클리어 상태는 저장되지 않습니다.
             </Info>
+            <ScreenshotDiv onClick={onCapture}>
+                📷 스크린샷 찍기
+            </ScreenshotDiv>
+            <GenreInfoDiv>
+                {
+                    Object.keys(genreColor).map(
+                        (item) => {
+                            return <GenreInfo genre={genreColor[Number.parseInt(item)]}>{Genre[Number.parseInt(item)]}</GenreInfo>
+                        }
+                    )
+                }
+            </GenreInfoDiv>
         </MainDiv>
     )
 }
@@ -31,6 +63,16 @@ const MainDiv = styled.div`
     background-color: whitesmoke;
 `
 
+const ScreenshotDiv = styled.div`
+    display: inline-block;
+    margin: 0px 0px 10px 10px;
+    font-family: 'taikoLight';
+    background-color: antiquewhite;
+    padding: 5px;
+    border-radius: 10px;
+    cursor:pointer;
+`
+
 const Title = styled.p`
     font-family: taikoBold;
     font-size: 20px;
@@ -38,6 +80,19 @@ const Title = styled.p`
 
 const Info = styled.p`
     font-family: taikoLight;
+`
+
+const GenreInfoDiv = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const GenreInfo = styled.div<{genre: string}>`
+    background-color: ${props => props.genre || "white"};
+    font-family: taikoLight;
+    padding: 5px;
+    margin: 0px 10px;
+    border-radius: 10px;
 `
 
 export default MainRankingHeaderComponent;

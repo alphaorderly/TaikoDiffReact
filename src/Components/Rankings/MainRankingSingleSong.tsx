@@ -1,11 +1,12 @@
 import React from 'react';
-import { ClearStatus, Ranks, Song, clearedType, codeGeneration } from '../../States/Ranks';
+import { Ranks, clearedType, codeGeneration } from '../../States/Ranks';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 import { ref, set, update } from 'firebase/database';
 import { db } from '../../Backend/Firebase';
 import { getAuth } from 'firebase/auth';
 import User from '../../States/User';
+import { ClearStatus, Song, genreColor } from '../../Consts/Songs';
 
 type Prop = {
     index: number,
@@ -106,17 +107,29 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
                     color={"#22b14c".concat(ranks[props.index].info.first ? "FF" : "33")}
                 >초견 주의</Stat>
             </InfoDiv>
+            <GenreDiv>
+                    {
+                        ranks[props.index].genre.map(
+                            item => {
+                                return <Genre genre={genreColor[item]}/>
+                            }
+                        )
+                    }
+            </GenreDiv>
         </MainDiv>
     )
 }
 
 
 const MainDiv = styled.div<{ura: boolean}>`
-    width: 240px;
+    width: 270px;
     margin: 10px;
     background-color: ${props => props.ura ? '#7519ec33' : '#fc258633'};
     border-radius: 15px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     @media screen and (max-width: 500px) {
         width: 90%;
     }
@@ -130,7 +143,7 @@ const TopDiv = styled.div`
 
 const TitleDiv = styled.div`
     padding: 10px;
-    width: 150px;
+    width: 190px;
     overflow: wrap;
     font-weight: bold;
     font-family: rocknroll, NanumSquare;
@@ -164,7 +177,7 @@ const ClearStatusText = styled.p`
 const Title = styled.p`
     margin: 0px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 0.7em;
 `
 
 const InfoDiv = styled.div`
@@ -179,6 +192,20 @@ const Stat = styled.p<{color: string}>`
     color: ${props => props.color || "white"};
     font-family: taikoLight;
     font-size: 12px;
+`
+
+const GenreDiv = styled.div`
+    height: 10px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+`
+
+const Genre = styled.div<{genre: string}>`
+    background-color: ${props => props.genre || "white"};
+    flex: 1;
 `
 
 export default MainRankingSingleSong;
