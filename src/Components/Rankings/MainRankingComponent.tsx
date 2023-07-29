@@ -85,7 +85,7 @@ const MainRankingComponent: React.FC = () => {
 
     return (
         <MainDiv>
-            <SearchBar value={search} onChange={text => setSearch(text.target.value)}/>
+            <SearchBar placeholder='검색할 제목을 입력해 주세요' value={search} onChange={text => setSearch(text.target.value)}/>
             <MainRankingHeaderComponent level={currentLevel} />
             <ContentDiv id="captureDiv">
                 {

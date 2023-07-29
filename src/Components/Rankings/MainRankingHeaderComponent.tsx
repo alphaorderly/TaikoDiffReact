@@ -85,13 +85,14 @@ const Info = styled.p`
 const GenreInfoDiv = styled.div`
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 `
 
 const GenreInfo = styled.div<{genre: string}>`
     background-color: ${props => props.genre || "white"};
     font-family: taikoLight;
     padding: 5px;
-    margin: 0px 10px;
+    margin: 10px 10px;
     border-radius: 10px;
 `
 
