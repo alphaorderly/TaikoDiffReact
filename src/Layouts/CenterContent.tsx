@@ -16,7 +16,7 @@ const CenterContent: React.FC<Prop> =  (props) => {
 }
 
 const MainDiv = styled.div`
-    width: 50%;
+    width: 80%;
     margin: auto;
     @media screen and (max-width: 500px) {
         width: 90%;

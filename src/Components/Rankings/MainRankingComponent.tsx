@@ -1,24 +1,96 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MainRankingHeaderComponent from './MainRankingHeaderComponent';
-import { useRecoilValue } from 'recoil';
-import { Ranks } from '../../States/Ranks';
+import { useRecoilState } from 'recoil';
+import {  Ranks, clearedType, codeGeneration } from '../../States/Ranks';
 import MainRankingContentComponent from './MainRankingContentComponent';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import User from '../../States/User';
+import { child, get, ref, set } from 'firebase/database';
+import { db } from '../../Backend/Firebase';
+import HashLoader from 'react-spinners/HashLoader';
+import { DifficultyList } from '../../Consts/Songs';
 
 const MainRankingComponent: React.FC = () => {
 
-    const currentRank = useRecoilValue(Ranks);
+    const [rank, setRank] = useRecoilState(Ranks);
+
     const [currentLevel, setCurrentLevel] = useState<number>(10);
+
+    const [user, setUser] = useRecoilState(User);
+
+    const [loading, setLoading] = useState(false);
+
+    const [search, setSearch] = useState<string>("");
+
+    useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth,(loggedInUser)=>{ 
+            if(loggedInUser && user.loggedIn === false)
+            {
+                setUser({loggedIn: true, name: loggedInUser.providerData[0].displayName, uid: loggedInUser.uid});
+            }
+            else if(!loggedInUser && user.loggedIn === true)
+            {
+                setUser({loggedIn: false, name: null, uid: null});
+            }
+
+            if(loggedInUser) {
+                const uid = loggedInUser.uid;
+
+                console.log(uid);
+
+                const dbRef = ref(db);
+
+                get(child(dbRef, `/data/${uid}`))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const serverValue: clearedType[] = snapshot.val();
+                        for(const clear of serverValue) {
+                            setRank(
+                                (prev) => {
+                                    return prev.map(item => {
+                                            if(codeGeneration(item) === clear.code) {
+                                                return {...item, clear: clear.cleared}
+                                            }
+                                            return item;
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                        setLoading(true);
+                    } else {
+                        console.log("no data");
+                        set(ref(db, `/data/${uid}`), "");
+                        setLoading(true);
+                    }
+                })
+            }
+            setLoading(true);
+        });
+    }, [])
+
+    if(loading === false) {
+        return (
+            <MainDiv>
+                <HashLoader
+                    style={{margin: "auto"}}
+                    size={30}
+                    color={"#ff5f5f"}
+                />
+            </MainDiv>
+        )
+    }
 
     return (
         <MainDiv>
+            <SearchBar value={search} onChange={text => setSearch(text.target.value)}/>
             <MainRankingHeaderComponent level={currentLevel} />
-            <ContentDiv>
+            <ContentDiv id="captureDiv">
                 {
-                    Object.keys(currentRank[currentLevel].rank).map((key, index) => {
-                        return (
-                            <MainRankingContentComponent level={currentLevel} difficulty={key} />
-                        )
+                    DifficultyList[currentLevel].map((difficulty) => {
+                        return <MainRankingContentComponent searchTag={search} difficulty={difficulty} level={currentLevel}/>
                     })
                 }
             </ContentDiv>
@@ -28,6 +100,19 @@ const MainRankingComponent: React.FC = () => {
 
 const MainDiv = styled.div`
     width: 100%;
+`
+
+const SearchBar = styled.input`
+    width: 100%;
+    height: 30px;
+    padding: 2px 10px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 15px;
+    resize: none;
+    border: none;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.45) inset;
+    vertical-align: middle;
+    font-family: rocknroll taikoLight;
 `
 
 const ContentDiv = styled.div`
