@@ -76,6 +76,12 @@ const DiffContent = styled.div`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-gap: 10px;
+    @media screen and (max-width: 500px) {
+        display: flex;
+        flex-wrap: wrap;
+        flex:1;
+    }
 `
 
 export default MainRankingContentComponent;
