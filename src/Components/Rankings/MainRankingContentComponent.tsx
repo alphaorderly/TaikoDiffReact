@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import {  Ranks } from '../../States/Ranks';
 import { useRecoilState } from 'recoil';
 import MainRankingSingleSong from './MainRankingSingleSong';
-import { Difficulty, difficultyColor } from '../../Consts/Songs';
+import { ClearStatus, Difficulty, difficultyColor } from '../../Consts/Songs';
+import clear from '../../Assets/images/clear.png'
+import fullCombo from '../../Assets/images/fc.png'
+import donderful from '../../Assets/images/fp.png'
 
 type Prop = {
     level: number,
@@ -17,9 +20,19 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
 
     return (
         <MainDiv>
-            <DiffDiv color={difficultyColor[props.difficulty] + "88"}>
-                <DiffTitle>{Difficulty[props.difficulty]}</DiffTitle>
-            </DiffDiv>
+            <TopDiv>
+                <DiffDiv color={difficultyColor[props.difficulty] + "88"}>
+                    <DiffTitle>{Difficulty[props.difficulty]}</DiffTitle>
+                </DiffDiv>
+                <ClearedDiv>
+                    <CrownIcon src={clear}/>
+                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어) && (item.difficulty === props.difficulty)).length}</CrownText>
+                    <CrownIcon src={fullCombo}/>
+                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.풀콤)  && (item.difficulty === props.difficulty)).length}</CrownText>
+                    <CrownIcon src={donderful}/>
+                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량) && (item.difficulty === props.difficulty)).length}</CrownText>
+                </ClearedDiv>
+            </TopDiv>
             <DiffContent>
                 {
                     currentRank.map((item, index) => {
@@ -39,6 +52,31 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
 
 const MainDiv = styled.div`
     margin: 20px 0px 0px 0px;
+`
+
+const TopDiv = styled.div`
+    display: flex;
+    justify-content: flex-start;
+`
+
+const CrownIcon = styled.img`
+    width: 24px;
+    align-self: flex-start;
+    margin-left: 15px;
+    margin-right: 15px;
+`
+
+const CrownText = styled.p`
+    margin: 0px;
+    margin-top: 5px;
+`
+
+const ClearedDiv = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 40px;
+    font-family: taikoLight;
+    margin-top: 4px;
 `
 
 const DiffDiv = styled.div`

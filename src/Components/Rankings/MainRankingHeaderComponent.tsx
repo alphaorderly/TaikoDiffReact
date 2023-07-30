@@ -2,12 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { Genre, genreColor } from '../../Consts/Songs';
 import html2canvas from 'html2canvas';
+import { useRecoilValue } from 'recoil';
+import { Ranks } from '../../States/Ranks';
 
 type Prop = {
     level: number,
 }
 
 const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
+
+    const currentRank = useRecoilValue(Ranks);
     
     const onSaveAs = (uri: string, filename: string) => {
 		var link = document.createElement('a');
