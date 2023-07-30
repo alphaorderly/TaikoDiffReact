@@ -10,7 +10,6 @@ type Prop = {
 const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
     
     const onSaveAs = (uri: string, filename: string) => {
-		console.log('onSaveAs');
 		var link = document.createElement('a');
 		document.body.appendChild(link);
 		link.href = uri;
@@ -20,7 +19,7 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 	};
 
     const onCapture = () => {
-		html2canvas(document.getElementById('captureDiv')!).then(canvas => {
+		html2canvas(document.getElementById('captureDiv')!, {scale: 1.1}).then(canvas => {
 			onSaveAs(canvas.toDataURL('image/png'), 'taiko-result.png')
 		});
 	};
