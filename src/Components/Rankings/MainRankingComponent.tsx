@@ -90,7 +90,7 @@ const MainRankingComponent: React.FC = () => {
             <ContentDiv id="captureDiv">
                 {
                     DifficultyList[currentLevel].map((difficulty) => {
-                        return <MainRankingContentComponent searchTag={search} difficulty={difficulty} level={currentLevel}/>
+                        return <MainRankingContentComponent searchTag={search.toLowerCase()} difficulty={difficulty} level={currentLevel}/>
                     })
                 }
             </ContentDiv>

@@ -38,7 +38,7 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
                     currentRank.map((item, index) => {
                         if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0) {
                             return <MainRankingSingleSong index={index} />
-                        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.includes(props.searchTag) || item.korTitle?.includes(props.searchTag))) {
+                        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag))) {
                             return <MainRankingSingleSong index={index} />
                         } else {
                             return null;
