@@ -2124,7 +2124,7 @@ export const defaultRank: Song[] = [
         level: 10,       
     },
     {
-        jpnTitle: "まださいたま2000",
+        jpnTitle: "またさいたま2000",
         korTitle: "마타사이타마2000",
         info: {
             personal:false,  
