@@ -74,9 +74,8 @@ const DiffContent = styled.div`
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 `
 
 export default MainRankingContentComponent;
