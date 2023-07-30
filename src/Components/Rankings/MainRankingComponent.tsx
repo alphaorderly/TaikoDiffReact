@@ -103,16 +103,17 @@ const MainDiv = styled.div`
 `
 
 const SearchBar = styled.input`
-    width: 100%;
+    width: 98%;
     height: 30px;
-    padding: 2px 10px;
-    margin: 0px 0px 10px 0px;
+    padding: 2px 1%;
+    margin: 0px 0px 20px 0px;
     border-radius: 15px;
     resize: none;
     border: none;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.45) inset;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
     vertical-align: middle;
     font-family: rocknroll taikoLight;
+    font-size: 14px;
 `
 
 const ContentDiv = styled.div`
