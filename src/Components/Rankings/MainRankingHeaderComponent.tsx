@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Genre, genreColor } from '../../Consts/Songs';
+import { ClearStatus, Genre, genreColor } from '../../Consts/Songs';
 import html2canvas from 'html2canvas';
 import { useRecoilValue } from 'recoil';
 import { Ranks } from '../../States/Ranks';
+import clear from '../../Assets/images/clear.png'
+import fullCombo from '../../Assets/images/fc.png'
+import donderful from '../../Assets/images/fp.png'
 
 type Prop = {
     level: number,
@@ -30,40 +33,78 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 
 
     return (
-        <MainDiv>
-            <Title>
-                태고의 달인 ⭐{props.level} 난이도 표
-            </Title>
-            <Info>
-                한국어 제목의 오른쪽 아이콘 클릭시 영상이 있을시에 한해 전량 영상으로 연결됩니다.
-            </Info>
-            <Info>
-                현재 상태를 클릭시 미클리어, 클리어, 풀콤, 전량 순으로 바뀝니다.
-            </Info>
-            <Info>
-                비 로그인시 클리어 상태는 저장되지 않습니다.
-            </Info>
-            <ScreenshotDiv onClick={onCapture}>
-                📷 스크린샷 찍기
-            </ScreenshotDiv>
-            <GenreInfoDiv>
-                {
-                    Object.keys(genreColor).map(
-                        (item) => {
-                            return <GenreInfo genre={genreColor[Number.parseInt(item)]}>{Genre[Number.parseInt(item)]}</GenreInfo>
-                        }
-                    )
-                }
-            </GenreInfoDiv>
-        </MainDiv>
+        <Div>
+            <MainDiv>
+                <Title>
+                    태고의 달인 ⭐{props.level} 난이도 표
+                </Title>
+                <Info>
+                    한국어 제목의 오른쪽 아이콘 클릭시 영상이 있을시에 한해 전량 영상으로 연결됩니다.
+                </Info>
+                <Info>
+                    현재 상태를 클릭시 미클리어, 클리어, 풀콤, 전량 순으로 바뀝니다.
+                </Info>
+                <Info>
+                    비 로그인시 클리어 상태는 저장되지 않습니다.
+                </Info>
+                <ScreenshotDiv onClick={onCapture}>
+                    📷 스크린샷 찍기
+                </ScreenshotDiv>
+                <GenreInfoDiv>
+                    {
+                        Object.keys(genreColor).map(
+                            (item) => {
+                                return <GenreInfo genre={genreColor[Number.parseInt(item)]}>{Genre[Number.parseInt(item)]}</GenreInfo>
+                            }
+                        )
+                    }
+                </GenreInfoDiv>
+            </MainDiv>
+            <ClearDiv>
+                <CrownText>⭐{props.level} 전체 클리어 갯수</CrownText>
+                <CrownIcon src={clear}/>
+                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어)).length}</CrownText>
+                <CrownIcon src={fullCombo}/>
+                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.풀콤)).length}</CrownText>
+                <CrownIcon src={donderful}/>
+                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량)).length}</CrownText>
+            </ClearDiv>
+        </Div>
     )
 }
+
+const Div = styled.div`
+    
+`
 
 const MainDiv = styled.div`
     border-radius: 20px;
     padding: 5px 10px 10px 30px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: whitesmoke;
+`
+
+const ClearDiv = styled.div`
+    display: flex;
+    align-items: center;
+    background-color: whitesmoke;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin: 15px 0px 0px 0px;
+    padding: 5px 10px;
+    border-radius: 10px;
+`
+
+const CrownText = styled.p`
+    margin: 0px 20px;
+    font-family: taikoBold;
+    font-size: 17px;
+`
+
+const CrownIcon = styled.img`
+    width: 24px;
+    height: 24px;
+    margin: 5px 0px;
+    margin-bottom: 10px;
 `
 
 const ScreenshotDiv = styled.div`
