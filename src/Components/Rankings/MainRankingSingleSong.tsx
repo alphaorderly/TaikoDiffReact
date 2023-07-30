@@ -7,6 +7,10 @@ import { db } from '../../Backend/Firebase';
 import { getAuth } from 'firebase/auth';
 import User from '../../States/User';
 import { ClearStatus, Song, genreColor } from '../../Consts/Songs';
+import clear from '../../Assets/images/clear.png'
+import fullCombo from '../../Assets/images/fc.png'
+import donderful from '../../Assets/images/fp.png'
+import noClear from '../../Assets/images/nc.png'
 
 type Prop = {
     index: number,
@@ -41,6 +45,8 @@ const getBackgroundColor = (stat: ClearStatus) => {
   };
 
 const MainRankingSingleSong: React.FC<Prop> = (props) => {
+
+    const clearImages = [noClear, clear, fullCombo, donderful];
 
     const [ranks, setRanks] = useRecoilState(Ranks);
 
@@ -88,9 +94,7 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
                     <ClearTitleText>
                         현재 상태
                     </ClearTitleText>
-                    <ClearStatusText>
-                        {ClearStatus[ranks[props.index].clear]}
-                    </ClearStatusText>
+                    <ClearIcon src={clearImages[ranks[props.index].clear]} />
                 </ClearDiv>
             </TopDiv>
             <InfoDiv>
@@ -130,7 +134,6 @@ const MainDiv = styled.div<{ura: boolean}>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     @media screen and (max-width: 500px) {
         width: 90%;
     }
@@ -152,7 +155,7 @@ const TitleDiv = styled.div`
 
 const ClearDiv = styled.div<{cleared: ClearStatus}>`
     width: 50px;
-    padding: 10px;
+    padding: 10px 10px 0px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -207,6 +210,11 @@ const GenreDiv = styled.div`
 const Genre = styled.div<{genre: string}>`
     background-color: ${props => props.genre || "white"};
     flex: 1;
+`
+
+const ClearIcon = styled.img`
+    width: 24px;
+    margin: 5px 0px;
 `
 
 export default MainRankingSingleSong;
