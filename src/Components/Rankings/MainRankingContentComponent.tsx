@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {  Ranks } from '../../States/Ranks';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import MainRankingSingleSong from './MainRankingSingleSong';
 import { ClearStatus, Difficulty, difficultyColor } from '../../Consts/Songs';
 import clear from '../../Assets/images/clear.png'
 import fullCombo from '../../Assets/images/fc.png'
 import donderful from '../../Assets/images/fp.png'
+import { ChosenGenre } from '../../States/ChosenGenre';
 
 type Prop = {
     level: number,
@@ -23,6 +24,8 @@ type Prop = {
 const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
 
     const [currentRank, setCurrentRank] = useRecoilState(Ranks);
+
+    const chosenGenre = useRecoilValue(ChosenGenre);
 
     return (
         <MainDiv>
@@ -42,9 +45,9 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
             <DiffContent>
                 {
                     currentRank.map((item, index) => {
-                        if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0) {
+                        if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0 && chosenGenre === null) {
                             return <MainRankingSingleSong index={index} />
-                        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag))) {
+                        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag)) && item.genre.includes(chosenGenre!)) {
                             return <MainRankingSingleSong index={index} />
                         } else {
                             return null;

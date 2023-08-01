@@ -2,11 +2,12 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ClearStatus, Genre, genreColor } from '../../Consts/Songs';
 import html2canvas from 'html2canvas';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Ranks } from '../../States/Ranks';
 import clear from '../../Assets/images/clear.png'
 import fullCombo from '../../Assets/images/fc.png'
 import donderful from '../../Assets/images/fp.png'
+import { ChosenGenre } from '../../States/ChosenGenre';
 
 type Prop = {
     level: number,
@@ -21,6 +22,8 @@ type Prop = {
 const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 
     const currentRank = useRecoilValue(Ranks);
+
+    const [chosenGenre, setChosenGenre] = useRecoilState(ChosenGenre);
     
     const onSaveAs = (uri: string, filename: string) => {
 		var link = document.createElement('a');
@@ -53,6 +56,9 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
                 <Info>
                     비 로그인시 클리어 상태는 저장되지 않습니다.
                 </Info>
+                <Info>
+                    장르를 클릭해 특정 장르만 확인할수 있습니다.
+                </Info>
                 <ScreenshotDiv onClick={onCapture}>
                     📷 스크린샷 찍기
                 </ScreenshotDiv>
@@ -60,7 +66,13 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
                     {
                         Object.keys(genreColor).map(
                             (item) => {
-                                return <GenreInfo genre={genreColor[Number.parseInt(item)]}>{Genre[Number.parseInt(item)]}</GenreInfo>
+                                return <GenreInfo isChosen={chosenGenre === Number.parseInt(item)} onClick={() => {
+                                    if(chosenGenre === null || chosenGenre !== Number.parseInt(item)) {
+                                        setChosenGenre(Number.parseInt(item))
+                                    } else {
+                                        setChosenGenre(null);
+                                    }
+                                }} genre={genreColor[Number.parseInt(item)]}>{Genre[Number.parseInt(item)]}</GenreInfo>
                             }
                         )
                     }
@@ -141,12 +153,14 @@ const GenreInfoDiv = styled.div`
     flex-wrap: wrap;
 `
 
-const GenreInfo = styled.div<{genre: string}>`
+const GenreInfo = styled.div<{genre: string, isChosen: boolean}>`
     background-color: ${props => props.genre || "white"};
     font-family: taikoLight;
     padding: 5px;
     margin: 10px 10px;
     border-radius: 10px;
+    cursor: pointer;
+    border: ${props => props.isChosen ? "solid 3px black" : "solid 0px black"};
 `
 
 export default MainRankingHeaderComponent;
