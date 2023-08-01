@@ -27,6 +27,18 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
 
     const chosenGenre = useRecoilValue(ChosenGenre);
 
+    if(currentRank.filter((item, index) => {
+        if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0 && chosenGenre === null) {
+            return true
+        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag)) && item.genre.includes(chosenGenre!)) {
+            return true
+        } else {
+            return false;
+        }
+    }).length === 0) {
+        return null;
+    }
+
     return (
         <MainDiv>
             <TopDiv>
