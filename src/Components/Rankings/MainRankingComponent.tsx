@@ -11,6 +11,10 @@ import { db } from '../../Backend/Firebase';
 import HashLoader from 'react-spinners/HashLoader';
 import { DifficultyList } from '../../Consts/Songs';
 
+/**
+ *  검색창, 헤더, 서열표
+ */
+
 const MainRankingComponent: React.FC = () => {
 
     const [rank, setRank] = useRecoilState(Ranks);
@@ -38,8 +42,6 @@ const MainRankingComponent: React.FC = () => {
             if(loggedInUser) {
                 const uid = loggedInUser.uid;
 
-                console.log(uid);
-
                 const dbRef = ref(db);
 
                 get(child(dbRef, `/data/${uid}`))
@@ -61,7 +63,6 @@ const MainRankingComponent: React.FC = () => {
                         }
                         setLoading(true);
                     } else {
-                        console.log("no data");
                         set(ref(db, `/data/${uid}`), "");
                         setLoading(true);
                     }

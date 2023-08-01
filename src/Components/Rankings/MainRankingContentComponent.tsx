@@ -14,6 +14,12 @@ type Prop = {
     searchTag: string
 }
 
+/**
+ * 
+ * 난이도명과 곡들
+ * 
+ */
+
 const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
 
     const [currentRank, setCurrentRank] = useRecoilState(Ranks);
@@ -60,23 +66,24 @@ const TopDiv = styled.div`
 `
 
 const CrownIcon = styled.img`
-    width: 24px;
+    width: 16px;
     align-self: flex-start;
     margin-left: 15px;
-    margin-right: 15px;
+    margin-right: 10px;
 `
 
 const CrownText = styled.p`
     margin: 0px;
-    margin-top: 5px;
+    margin-top: 1px;
 `
 
 const ClearedDiv = styled.div`
     display: flex;
     justify-content: flex-start;
     margin-left: 40px;
+    margin-right: 10px;
     font-family: taikoLight;
-    margin-top: 4px;
+    margin-top: 10px;
 `
 
 const DiffDiv = styled.div`
@@ -101,7 +108,7 @@ const DiffDiv = styled.div`
 `
 
 const DiffTitle = styled.p`
-    font-size: 20px;
+    font-size: 1em;
     font-family: taikoBold;
 `
 

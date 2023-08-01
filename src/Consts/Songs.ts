@@ -3504,8 +3504,8 @@ export const defaultRank: Song[] = [
         level: 10,       
     },
     {
-        jpnTitle: "OK I'll blue rat",
-        korTitle: "OK I'll blue rat",
+        jpnTitle: "OK I'm blue rat",
+        korTitle: "OK I'm blue rat",
         info: {
             personal:false,  
             hardFC:false,   

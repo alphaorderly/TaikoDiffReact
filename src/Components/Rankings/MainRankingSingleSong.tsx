@@ -44,6 +44,12 @@ const getBackgroundColor = (stat: ClearStatus) => {
     `;
   };
 
+  /**
+   * 
+   * 개별 곡
+   * 
+   */
+
 const MainRankingSingleSong: React.FC<Prop> = (props) => {
 
     const clearImages = [noClear, clear, fullCombo, donderful];
@@ -75,13 +81,13 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
                     cleared={ranks[props.index].clear}
                     onClick={() => {
                         setRanks((prev) => {
-                                const after = prev.map(item => {
-                                if(item.jpnTitle === ranks[props.index].jpnTitle && item.ura === ranks[props.index].ura) {
-                                    return {
-                                        ...item,
-                                        clear: (item.clear + 1) % 4
-                                    }
+                            const after = prev.map(item => {
+                            if(item.jpnTitle === ranks[props.index].jpnTitle && item.ura === ranks[props.index].ura) {
+                                return {
+                                    ...item,
+                                    clear: (item.clear + 1) % 4
                                 }
+                            }
                                 return item;
                             });
 

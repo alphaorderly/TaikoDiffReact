@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ClearStatus, Genre, genreColor } from '../../Consts/Songs';
 import html2canvas from 'html2canvas';
 import { useRecoilValue } from 'recoil';
@@ -12,6 +12,12 @@ type Prop = {
     level: number,
 }
 
+
+/**
+ * 
+ *  헤더
+ * 
+ */
 const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 
     const currentRank = useRecoilValue(Ranks);
@@ -61,7 +67,8 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
                 </GenreInfoDiv>
             </MainDiv>
             <ClearDiv>
-                <CrownText>⭐{props.level} 전체 클리어 갯수</CrownText>
+                <CrownText>⭐{props.level} 전체<br/>클리어 갯수</CrownText>
+                <div style={{margin: "10px"}}/>
                 <CrownIcon src={clear}/>
                 <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어)).length}</CrownText>
                 <CrownIcon src={fullCombo}/>
@@ -76,6 +83,7 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 const Div = styled.div`
     
 `
+
 
 const MainDiv = styled.div`
     border-radius: 20px;
@@ -95,15 +103,16 @@ const ClearDiv = styled.div`
 `
 
 const CrownText = styled.p`
-    margin: 0px 20px;
+    margin: 0px 10px;
     font-family: taikoBold;
-    font-size: 17px;
+    font-size: 1em;
+    line-height: 1.2em;
 `
 
 const CrownIcon = styled.img`
-    width: 24px;
-    height: 24px;
-    margin: 5px 0px;
+    width: 16px;
+    height: 16px;
+    margin: 8px 0px 0px 0px;
     margin-bottom: 10px;
 `
 
