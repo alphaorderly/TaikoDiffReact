@@ -133,15 +133,17 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
 
 const MainDiv = styled.div<{ura: boolean}>`
     width: 270px;
-    margin: 10px;
+    margin: 0px;
     background-color: ${props => props.ura ? '#7519ec33' : '#fc258633'};
     border-radius: 15px;
     z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    z-index: -1;
     @media screen and (max-width: 500px) {
-        width: 90%;
+        align-self: stretch;
+        width: 100%;
     }
 `
 

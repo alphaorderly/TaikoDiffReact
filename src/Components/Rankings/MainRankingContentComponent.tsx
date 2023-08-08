@@ -140,6 +140,8 @@ const DiffContent = styled.div`
     @media screen and (max-width: 500px) {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
         flex:1;
     }
 `

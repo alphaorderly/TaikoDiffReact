@@ -1,20 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Login, Logout } from '@mui/icons-material';
+import { Close, Login, Logout } from '@mui/icons-material';
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { auth, db } from '../../Backend/Firebase';
 import { Ranks, clearedType, codeGeneration } from '../../States/Ranks';
 import User from '../../States/User';
-import { child, ref, get, set } from 'firebase/database';
-import { ClipLoader } from 'react-spinners';
+import { DonderToken } from '../../States/DonderToken';
+import Modal from 'react-modal';
 
+const modalStyles: Modal.Styles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+    overlay: {
+        height: '100%',
+        width: '100%',
+        position: 'fixed',
+    }
+};
 
 const Header: React.FC = () => {
 
     const resetRank = useResetRecoilState(Ranks);
     const setRank = useSetRecoilState(Ranks);
     const [user, setUser] = useRecoilState(User);
+    const [donderToken, setDonderToken] = useRecoilState(DonderToken)
+    const [herobaModal, setHerobaModal] = useState(false);
+
+    const idRef = useRef<HTMLInputElement>(null);
+    const pwRef = useRef<HTMLInputElement>(null);
 
     function handleGoogleLogin() {
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
@@ -40,29 +60,31 @@ const Header: React.FC = () => {
             <TitleText>
                 태고의 달인 난이도 표
             </TitleText>
-            {
-                user.loggedIn
-                ?
-                <
-                    IconDiv
-                    onClick={handleGoogleLogOut}
-                >
-                    <Logout
-                        style={{marginRight: "20px", fontSize: "40px"}}
-                    />
-                    <IconText>로그아웃</IconText>
-                </IconDiv>
-                :
-                <
-                    IconDiv
-                    onClick={handleGoogleLogin}
-                >
-                    <Login 
-                        style={{marginRight: "20px", fontSize: "40px"}}
-                    />
-                    <IconText>로그인</IconText>
-                </IconDiv>
-            }
+            <LoginDiv>
+                {
+                    user.loggedIn
+                    ?
+                    <
+                        IconDiv
+                        onClick={handleGoogleLogOut}
+                    >
+                        <Logout
+                            style={{fontSize: "24px", alignSelf: "center"}}
+                        />
+                        <IconText>구글 로그아웃</IconText>
+                    </IconDiv>
+                    :
+                    <
+                        IconDiv
+                        onClick={handleGoogleLogin}
+                    >
+                        <Login 
+                            style={{fontSize: "24px", alignSelf: "center"}}
+                        />
+                        <IconText>구글 로그인</IconText>
+                    </IconDiv>
+                }
+            </LoginDiv>
         </MainDiv>
     )
 }
@@ -87,13 +109,43 @@ const TitleText = styled.p`
 
 const IconDiv = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-top: 10px;
     cursor:pointer;
 `
 
 const IconText = styled.p`
     font-family: taikoLight;
-    font-size: 0.8em;
+    align-self: center;
+    font-size: 0.7em;
+`
+
+const LoginDiv = styled.div`
+    display: flex;
+`
+
+const DonderLoginDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
+
+const DonderLoginInput = styled.input`
+    border: 1px solid black;
+    font-size: 16px;
+    height: 22px;
+    padding: 3px;
+    border-radius: 5px;
+`
+
+const DonderLoginText = styled.p`
+    margin-right: 20px;
+    font-family: taikoLight;
+`
+
+const DonderLoginButton = styled.button`
+    
 `
