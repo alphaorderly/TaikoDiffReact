@@ -60,8 +60,8 @@ const ScreenShotDiff: React.FC<Props> = (props) => {
                                 <SingleSongDiv key={item.jpnTitle + item.ura}>
                                     <SongDiv clear={item.clear}>
                                         <TitleDiv>
-                                            <Title>{item.jpnTitle}</Title>
-                                            <Title>{item.korTitle}</Title>
+                                            <Title ura={item.ura}>{item.jpnTitle}</Title>
+                                            <Title ura={item.ura}>{item.korTitle}</Title>
                                         </TitleDiv>
                                         <Clear>
                                             <ClearIcon src={clearImages[item.clear]} />
@@ -150,10 +150,11 @@ const Genre = styled.div<{genre: string}>`
     flex: 1;
 `
 
-const Title = styled.p`
+const Title = styled.p<{ura: boolean}>`
     margin: 0px;
     font-family: rocknroll, taikoLight, NanumSquare;
     font-size: 1em;
+    color: ${props => props.ura ? "#4B0082" : "black"}
 `
 
 const Clear = styled.div`
