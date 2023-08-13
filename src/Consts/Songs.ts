@@ -1720,7 +1720,7 @@ export const defaultRank: Song[] = [
       jpnTitle: 'ゴーゴー・キッチン',
       korTitle: '고고키친',
       info: { personal: true, hardFC: false, double: false, first: true },
-      genre: [],
+      genre: [Genre.남코오리지널],
       ura: true,
       difficulty: 4,
       clear: 0,
@@ -1805,7 +1805,7 @@ export const defaultRank: Song[] = [
       songNo: 722
     },
     {
-      jpnTitle: 'チルノのパーフェクトさんすう教室 ⑨周年バージョン',
+      jpnTitle: 'チルノのパーフェクトさんすう教室 (9)',
       korTitle: '치르노의 산수교실 9주년 버전',
       info: { personal: false, hardFC: false, double: false, first: false },
       genre: [ 5 ],
@@ -2652,7 +2652,7 @@ export const defaultRank: Song[] = [
       songNo: 425
     },
     {
-      jpnTitle: 'スーパーD&D ～完全にリードしてアイマイミー～',
+      jpnTitle: 'スーパーD&D',
       korTitle: '슈퍼 D&D',
       info: { personal: false, hardFC: false, double: false, first: false },
       genre: [ 5 ],

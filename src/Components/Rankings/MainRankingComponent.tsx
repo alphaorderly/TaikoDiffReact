@@ -10,6 +10,8 @@ import { child, get, ref, set } from 'firebase/database';
 import { db } from '../../Backend/Firebase';
 import HashLoader from 'react-spinners/HashLoader';
 import { DifficultyList } from '../../Consts/Songs';
+import { ChosenLevel } from '../../States/ChosenLevel';
+import ScreenShot from '../ScreenShot/ScreenShot';
 
 /**
  *  검색창, 헤더, 서열표
@@ -19,7 +21,7 @@ const MainRankingComponent: React.FC = () => {
 
     const [rank, setRank] = useRecoilState(Ranks);
 
-    const [currentLevel, setCurrentLevel] = useState<number>(10);
+    const [currentLevel, setCurrentLevel] = useRecoilState(ChosenLevel);
 
     const [user, setUser] = useRecoilState(User);
 
@@ -88,13 +90,16 @@ const MainRankingComponent: React.FC = () => {
         <MainDiv>
             <SearchBar placeholder='검색할 제목을 입력해 주세요' value={search} onChange={text => setSearch(text.target.value)}/>
             <MainRankingHeaderComponent level={currentLevel} />
-            <ContentDiv id="captureDiv">
+            <ContentDiv>
                 {
                     DifficultyList[currentLevel].map((difficulty) => {
                         return <MainRankingContentComponent searchTag={search.toLowerCase()} difficulty={difficulty} level={currentLevel}/>
                     })
                 }
             </ContentDiv>
+            <div>
+                <ScreenShot rank={rank} currentLevel={currentLevel}/>
+            </div>
         </MainDiv>
     )
 }

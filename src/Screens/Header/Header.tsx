@@ -6,7 +6,6 @@ import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signO
 import { auth, db } from '../../Backend/Firebase';
 import { Ranks, clearedType, codeGeneration } from '../../States/Ranks';
 import User from '../../States/User';
-import { DonderToken } from '../../States/DonderToken';
 import Modal from 'react-modal';
 
 const modalStyles: Modal.Styles = {
@@ -30,8 +29,6 @@ const Header: React.FC = () => {
     const resetRank = useResetRecoilState(Ranks);
     const setRank = useSetRecoilState(Ranks);
     const [user, setUser] = useRecoilState(User);
-    const [donderToken, setDonderToken] = useRecoilState(DonderToken)
-    const [herobaModal, setHerobaModal] = useState(false);
 
     const idRef = useRef<HTMLInputElement>(null);
     const pwRef = useRef<HTMLInputElement>(null);
@@ -125,27 +122,4 @@ const IconText = styled.p`
 
 const LoginDiv = styled.div`
     display: flex;
-`
-
-const DonderLoginDiv = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`
-
-const DonderLoginInput = styled.input`
-    border: 1px solid black;
-    font-size: 16px;
-    height: 22px;
-    padding: 3px;
-    border-radius: 5px;
-`
-
-const DonderLoginText = styled.p`
-    margin-right: 20px;
-    font-family: taikoLight;
-`
-
-const DonderLoginButton = styled.button`
-    
 `

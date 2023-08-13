@@ -79,21 +79,22 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
                 </TitleDiv>
                 <ClearDiv 
                     cleared={ranks[props.index].clear}
-                    onClick={() => {
-                        setRanks((prev) => {
-                            const after = prev.map(item => {
-                            if(item.jpnTitle === ranks[props.index].jpnTitle && item.ura === ranks[props.index].ura) {
-                                return {
-                                    ...item,
-                                    clear: (item.clear + 1) % 4
+                    onClick={
+                        () => {
+                            setRanks((prev) => {
+                                const after = prev.map(item => {
+                                if(item.jpnTitle === ranks[props.index].jpnTitle && item.ura === ranks[props.index].ura) {
+                                    return {
+                                        ...item,
+                                        clear: (item.clear + 1) % 4
+                                    }
                                 }
-                            }
-                                return item;
-                            });
+                                    return item;
+                                });
 
-                            getClears(after);
+                                getClears(after);
 
-                            return after;
+                                return after;
                         })
                     }}
                 >
@@ -140,7 +141,6 @@ const MainDiv = styled.div<{ura: boolean}>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    z-index: -1;
     @media screen and (max-width: 500px) {
         align-self: stretch;
         width: 100%;
@@ -162,6 +162,8 @@ const TitleDiv = styled.div`
 `
 
 const ClearDiv = styled.div<{cleared: ClearStatus}>`
+    cursor: pointer;
+    z-index: 10000;
     width: 50px;
     padding: 10px 10px 0px 10px;
     display: flex;
@@ -171,16 +173,9 @@ const ClearDiv = styled.div<{cleared: ClearStatus}>`
     border-bottom-left-radius: 15px;
     ${({ cleared }) => getBackgroundColor(cleared)} 
     justify-content: space-around;
-    cursor: pointer;
 `
 
 const ClearTitleText = styled.p`
-    margin: 0px;
-    font-family: taikoLight;
-    font-size: 12px;
-`
-
-const ClearStatusText = styled.p`
     margin: 0px;
     font-family: taikoLight;
     font-size: 12px;

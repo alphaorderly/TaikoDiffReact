@@ -35,8 +35,22 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 	};
 
     const onCapture = () => {
-		html2canvas(document.getElementById('captureDiv')!, {scale: 1.1}).then(canvas => {
+        const captureDiv = document.getElementById('screenshot');
+        if(captureDiv === null || captureDiv === undefined) {
+            alert("캡처 실패!");
+            return;
+        }
+        const name = prompt("스크린샷에 포함될 당신의 아이디를 적어주세요");
+        captureDiv.style.display = 'block';
+        
+        const nameDiv = document.getElementById('screenshotName');
+        if(nameDiv !== null || nameDiv !== undefined) {
+            nameDiv!.innerHTML = `태고의 달인 ⭐${props.level} by ` + name;
+        }
+
+		html2canvas(captureDiv, {scale: 1.1}).then(canvas => {
 			onSaveAs(canvas.toDataURL('image/png'), 'taiko-result.png')
+            captureDiv.style.display = 'none';
 		});
 	};
 
