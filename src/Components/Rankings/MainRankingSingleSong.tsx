@@ -75,7 +75,7 @@ const MainRankingSingleSong: React.FC<Prop> = (props) => {
             <TopDiv>
                 <TitleDiv>
                     <Title>{ranks[props.index].jpnTitle}</Title>
-                    <Title>{ranks[props.index].korTitle} {ranks[props.index].playVideo && <span style={{cursor: 'pointer'}} onClick={() => window.open(ranks[props.index].playVideo)}>📺</span>}</Title>
+                    <Title>{ranks[props.index].korTitle} <span style={{cursor: 'pointer'}} onClick={() => window.open(`https://www.youtube.com/results?search_query=${ranks[props.index].jpnTitle}`)}>📺</span></Title>
                 </TitleDiv>
                 <ClearDiv 
                     cleared={ranks[props.index].clear}

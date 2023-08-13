@@ -62,7 +62,7 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
                     태고의 달인 ⭐{props.level} 난이도 표
                 </Title>
                 <Info>
-                    한국어 제목의 오른쪽 아이콘 클릭시 영상이 있을시에 한해 전량 영상으로 연결됩니다.
+                    한국어 제목의 오른쪽 아이콘 클릭시 유튜브로 연결됩니다.
                 </Info>
                 <Info>
                     현재 상태를 클릭시 미클리어, 클리어, 풀콤, 전량 순으로 바뀝니다.
