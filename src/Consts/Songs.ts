@@ -958,6 +958,17 @@ export const defaultRank: Song[] = [
       songNo: 851
     },
     {
+      jpnTitle: '弧',
+      korTitle: '호',
+      info: { personal: false, hardFC: false, double: false, first: false },
+      genre: [ 7 ],
+      ura: false,
+      difficulty: 3,
+      clear: 0,
+      level: 10,
+      songNo: 1085
+    },
+    {
       jpnTitle: '†バチ!ムチ!?マッスルキングダム†',
       korTitle: '바찌!무찌!?머슬킹덤',
       info: { personal: false, hardFC: false, double: false, first: true },
