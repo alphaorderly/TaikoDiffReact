@@ -25,7 +25,7 @@ const MainRankingComponent: React.FC = () => {
 
     const [user, setUser] = useRecoilState(User);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [search, setSearch] = useState<string>("");
 
@@ -89,7 +89,7 @@ const MainRankingComponent: React.FC = () => {
     return (
         <MainDiv>
             <SearchBar placeholder='검색할 제목을 입력해 주세요' value={search} onChange={text => setSearch(text.target.value)}/>
-            <MainRankingHeaderComponent level={currentLevel} />
+            <MainRankingHeaderComponent />
             <ContentDiv>
                 {
                     DifficultyList[currentLevel].map((difficulty) => {

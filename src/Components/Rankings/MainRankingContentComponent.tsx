@@ -47,11 +47,11 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
                 </DiffDiv>
                 <ClearedDiv>
                     <CrownIcon src={clear}/>
-                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어) && (item.difficulty === props.difficulty)).length}</CrownText>
+                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어) && (item.difficulty === props.difficulty) && (item.level === props.level)).length}</CrownText>
                     <CrownIcon src={fullCombo}/>
-                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.풀콤)  && (item.difficulty === props.difficulty)).length}</CrownText>
+                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.풀콤)  && (item.difficulty === props.difficulty) && (item.level === props.level)).length}</CrownText>
                     <CrownIcon src={donderful}/>
-                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량) && (item.difficulty === props.difficulty)).length}</CrownText>
+                    <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량) && (item.difficulty === props.difficulty) && (item.level === props.level)).length}</CrownText>
                 </ClearedDiv>
             </TopDiv>
             <DiffContent>

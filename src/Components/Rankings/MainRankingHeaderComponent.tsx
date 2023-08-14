@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { ClearStatus, Genre, genreColor } from '../../Consts/Songs';
+import { ClearStatus, DifficultyList, Genre, genreColor } from '../../Consts/Songs';
 import html2canvas from 'html2canvas';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Ranks } from '../../States/Ranks';
@@ -8,20 +8,18 @@ import clear from '../../Assets/images/clear.png'
 import fullCombo from '../../Assets/images/fc.png'
 import donderful from '../../Assets/images/fp.png'
 import { ChosenGenre } from '../../States/ChosenGenre';
-
-type Prop = {
-    level: number,
-}
-
+import { ChosenLevel } from '../../States/ChosenLevel';
 
 /**
  * 
  *  헤더
  * 
  */
-const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
+const MainRankingHeaderComponent: React.FC = () => {
 
     const currentRank = useRecoilValue(Ranks);
+
+    const [chosenLevel, setChosenLevel] = useRecoilState(ChosenLevel);
 
     const [chosenGenre, setChosenGenre] = useRecoilState(ChosenGenre);
     
@@ -45,7 +43,7 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
         
         const nameDiv = document.getElementById('screenshotName');
         if(nameDiv !== null || nameDiv !== undefined) {
-            nameDiv!.innerHTML = `태고의 달인 ⭐${props.level} by ` + name;
+            nameDiv!.innerHTML = `태고의 달인 ⭐${chosenLevel} by ` + name;
         }
 
 		html2canvas(captureDiv, {scale: 1.1}).then(canvas => {
@@ -54,12 +52,26 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
 		});
 	};
 
+    const levelChangeHandler = (e:React.ChangeEvent<HTMLSelectElement>) => {
+        setChosenLevel(Number.parseInt(e.target.value))
+    }
+
 
     return (
         <Div>
             <MainDiv>
                 <Title>
-                    태고의 달인 ⭐{props.level} 난이도 표
+                    태고의 달인 ⭐
+                    <LevelSelect defaultValue={chosenLevel} onChange={levelChangeHandler}>
+                        {
+                            Object.keys(DifficultyList).map(
+                                item => {
+                                    return <LevelOption value={item}>{item}</LevelOption>
+                                }
+                            )
+                        }
+                    </LevelSelect> 
+                    &nbsp;&nbsp;난이도 표
                 </Title>
                 <Info>
                     한국어 제목의 오른쪽 아이콘 클릭시 유튜브로 연결됩니다.
@@ -93,14 +105,14 @@ const MainRankingHeaderComponent: React.FC<Prop> = (props) => {
                 </GenreInfoDiv>
             </MainDiv>
             <ClearDiv>
-                <CrownText>⭐{props.level} 전체<br/>클리어 갯수</CrownText>
+                <CrownText>⭐{chosenLevel} 전체<br/>클리어 갯수</CrownText>
                 <div style={{margin: "10px"}}/>
                 <CrownIcon src={clear}/>
-                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어)).length}</CrownText>
+                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.클리어 && item.level === chosenLevel)).length}</CrownText>
                 <CrownIcon src={fullCombo}/>
-                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.풀콤)).length}</CrownText>
+                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.풀콤 && item.level === chosenLevel)).length}</CrownText>
                 <CrownIcon src={donderful}/>
-                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량)).length}</CrownText>
+                <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량 && item.level === chosenLevel)).length}</CrownText>
             </ClearDiv>
         </Div>
     )
@@ -175,6 +187,17 @@ const GenreInfo = styled.div<{genre: string, isChosen: boolean}>`
     border-radius: 10px;
     cursor: pointer;
     border: ${props => props.isChosen ? "solid 3px black" : "solid 0px black"};
+`
+
+const LevelSelect = styled.select`
+    border: 0px;
+    background-color: transparent;
+    font-family: taikoBold;
+    font-size: 20px;
+`
+
+const LevelOption = styled.option`
+    font-size: 15px;
 `
 
 export default MainRankingHeaderComponent;

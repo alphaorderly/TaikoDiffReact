@@ -57,7 +57,8 @@ export const difficultyColor: { [props: number]: string } = {
 
 // 레벨별 난이도 리스트
 export const DifficultyList: {[props: number]: Difficulty[]} = {
-    10 : [Difficulty.졸업플러스, Difficulty.졸업, Difficulty.최상, Difficulty.상, Difficulty.중상, Difficulty.중, Difficulty.중하, Difficulty.하, Difficulty.최하, Difficulty.보류]
+    10 : [Difficulty.졸업플러스, Difficulty.졸업, Difficulty.최상, Difficulty.상, Difficulty.중상, Difficulty.중, Difficulty.중하, Difficulty.하, Difficulty.최하, Difficulty.보류],
+    9 : []
 }
 
 // Recoil State / Type
@@ -71,7 +72,6 @@ export type Song = {
         double: boolean     // 2인용,
         first: boolean      // 초견 어려움 - 초록색
     },
-    playVideo?: string,     // 전량 영상,
     genre: Genre[],         // 장르
     ura: boolean,           // 뒷보면 여부
     difficulty: Difficulty, // 난이도
