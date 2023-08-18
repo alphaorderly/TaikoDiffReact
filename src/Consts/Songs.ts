@@ -3101,6 +3101,17 @@ export const defaultRank: Song[] = [
       clear: 0,
       level: 10,
       songNo: 1037
+    },
+    {
+      jpnTitle: 'Kill My Fortune',
+      korTitle: '킬 마이 포츈',
+      info: { personal: false, hardFC: false, double: false, first: false },
+      genre: [ Genre.버라이어티 ],
+      ura: true,
+      difficulty: Difficulty.보류,
+      clear: 0,
+      level: 10,
+      songNo: 1100
     }
   ]
   
