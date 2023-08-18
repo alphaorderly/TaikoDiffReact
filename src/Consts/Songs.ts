@@ -735,7 +735,7 @@ export const defaultRank: Song[] = [
       difficulty: 2,
       clear: 0,
       level: 10,
-      songNo: 690
+      songNo: 33
     },
     {
       jpnTitle: 'Dreadnought',
@@ -1505,7 +1505,7 @@ export const defaultRank: Song[] = [
       difficulty: 4,
       clear: 0,
       level: 10,
-      songNo: 953
+      songNo: 954
     },
     {
       jpnTitle: 'ex寅 Trap!!',
@@ -2843,7 +2843,7 @@ export const defaultRank: Song[] = [
       korTitle: '삼도천난무',
       info: { personal: true, hardFC: false, double: false, first: false },
       genre: [ 7 ],
-      ura: false,
+      ura: true,
       difficulty: 7,
       clear: 0,
       level: 10,
@@ -3041,7 +3041,7 @@ export const defaultRank: Song[] = [
       korTitle: '난수조정의 신데렐라',
       info: { personal: false, hardFC: false, double: false, first: false },
       genre: [ 0 ],
-      ura: false,
+      ura: true,
       difficulty: 8,
       clear: 0,
       level: 10,
