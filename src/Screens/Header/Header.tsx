@@ -1,30 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Close, Login, Logout } from '@mui/icons-material';
+import { Close, Login, Logout, ImportExport } from '@mui/icons-material';
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { auth, db } from '../../Backend/Firebase';
 import { Ranks, clearedType, codeGeneration } from '../../States/Ranks';
 import User from '../../States/User';
-import Modal from 'react-modal';
-
-const modalStyles: Modal.Styles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-    overlay: {
-        height: '100%',
-        width: '100%',
-        position: 'fixed',
-    }
-};
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
+
+    const navigate = useNavigate();
 
     const resetRank = useResetRecoilState(Ranks);
     const setRank = useSetRecoilState(Ranks);
@@ -54,10 +40,23 @@ const Header: React.FC = () => {
 
     return (
         <MainDiv>
-            <TitleText>
+            <TitleText onClick={() => {navigate("/", {replace: true})}}>
                 태고의 달인 난이도 표
             </TitleText>
             <LoginDiv>
+                {
+                    user.loggedIn
+                    &&
+                    <
+                        IconDiv
+                        onClick={() => navigate("/getclear")}
+                    >
+                        <ImportExport
+                            style={{fontSize: "24px", alignSelf: "center"}}
+                        />
+                        <IconText>동더히로바<br/>가져오기</IconText>
+                    </IconDiv>
+                }
                 {
                     user.loggedIn
                     ?
@@ -102,6 +101,7 @@ const TitleText = styled.p`
     font-family: taikoBold;
     padding: 3px 20px;
     font-size: 1em;
+    cursor: pointer;
 `
 
 const IconDiv = styled.div`
@@ -118,6 +118,7 @@ const IconText = styled.p`
     font-family: taikoLight;
     align-self: center;
     font-size: 0.7em;
+    text-align: center;
 `
 
 const LoginDiv = styled.div`

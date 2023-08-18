@@ -1,19 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Main from './Screens/Main/Main';
-import Header from './Screens/Header/Header';
 import './index.css'
 import { RecoilRoot } from 'recoil';
-import Footer from './Screens/Footer/Footer';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import RankScreen from './Screens/Rank/RankScreen';
+import DonderData from './Screens/DonderData/DonderData';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RankScreen />,
+    errorElement: <center>그런 화면은 없습니다.</center>
+  },
+  {
+    path: "/getclear",
+    element: <DonderData />
+  }
+])
+
 root.render(
   <RecoilRoot>
-    <Header />
-    <Main />
-    <Footer />
+    <RouterProvider router={router} />
   </RecoilRoot>
 );
 

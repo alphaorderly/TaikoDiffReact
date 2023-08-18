@@ -2876,7 +2876,7 @@ export const defaultRank: Song[] = [
       korTitle: 'KAGEKIYO',
       info: { personal: false, hardFC: false, double: false, first: false },
       genre: [ 4 ],
-      ura: false,
+      ura: true,
       difficulty: 7,
       clear: 0,
       level: 10,
