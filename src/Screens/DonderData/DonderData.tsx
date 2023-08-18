@@ -207,7 +207,7 @@ const DonderData: React.FC = () => {
                                     }}
                                 >
                                     <img src={item.myDon} style={{width: '64px'}}/>
-                                    <p style={{fontFamily: 'taikoLight', marginLeft: '20px', marginRight: '10px'}}>{item.nickname}</p>
+                                    <p style={{fontFamily: 'rocknroll, taikoLight', marginLeft: '20px', marginRight: '10px'}}>{item.nickname}</p>
                                 </div>
                             )
                         }
