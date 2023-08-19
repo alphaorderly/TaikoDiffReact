@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
                 <ContactText>All rights of taiko no tatsujin belong to bandai namco</ContactText>
                 <ContactText>Contact : ilov1112@gmail.com</ContactText>
                 <ContactText>Github : https://github.com/nexusbusim/TaikoDiffReact</ContactText>
-                <ContactText>Contributed by hotsixman, Lagos</ContactText>
+                <ContactText>Contributed by hotsixman, Team Lagos</ContactText>
             </MainDiv>
         </CenterContent>
     )
