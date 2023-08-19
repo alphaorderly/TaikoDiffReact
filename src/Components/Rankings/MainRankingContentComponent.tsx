@@ -28,13 +28,19 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
     const chosenGenre = useRecoilValue(ChosenGenre);
 
     if(currentRank.filter((item, index) => {
-        if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0 && chosenGenre === null) {
-            return true
-        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag)) && item.genre.includes(chosenGenre!)) {
-            return true
-        } else {
+        if(item.difficulty !== props.difficulty || item.level !== props.level) {
             return false;
         }
+
+        if(props.searchTag.length === 0 && chosenGenre === null) {
+            return true;
+        } else if ((item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag))) {
+            return true;
+        } else if(item.genre.includes(chosenGenre!)) {
+            return true;
+        }
+
+        return false;
     }).length === 0) {
         return null;
     }
@@ -57,13 +63,19 @@ const MainRankingContentComponent: React.FC<Prop> = (props: Prop) => {
             <DiffContent>
                 {
                     currentRank.map((item, index) => {
-                        if(item.difficulty == props.difficulty && item.level == props.level && props.searchTag.length === 0 && chosenGenre === null) {
-                            return <MainRankingSingleSong index={index} />
-                        } else if (item.difficulty == props.difficulty && item.level == props.level && (item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag)) && item.genre.includes(chosenGenre!)) {
-                            return <MainRankingSingleSong index={index} />
-                        } else {
+                        if(item.difficulty !== props.difficulty || item.level !== props.level) {
                             return null;
                         }
+
+                        if(props.searchTag.length === 0 && chosenGenre === null) {
+                            return <MainRankingSingleSong index={index} />;
+                        } else if ((item.jpnTitle.toLowerCase().includes(props.searchTag) || item.korTitle?.toLowerCase().includes(props.searchTag))) {
+                            return <MainRankingSingleSong index={index} />;
+                        } else if(item.genre.includes(chosenGenre!)) {
+                            return <MainRankingSingleSong index={index} />;
+                        }
+
+                        return null;
                     })
                 }
             </DiffContent>
