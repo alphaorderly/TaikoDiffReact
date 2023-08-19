@@ -2,13 +2,18 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ClearStatus, DifficultyList, Genre, genreColor } from '../../Consts/Songs';
 import html2canvas from 'html2canvas';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { Ranks } from '../../States/Ranks';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { Ranks, clearedType } from '../../States/Ranks';
 import clear from '../../Assets/images/clear.png'
 import fullCombo from '../../Assets/images/fc.png'
 import donderful from '../../Assets/images/fp.png'
 import { ChosenGenre } from '../../States/ChosenGenre';
 import { ChosenLevel } from '../../States/ChosenLevel';
+import { getAuth } from 'firebase/auth';
+import { ref, set } from 'firebase/database';
+import { db } from '../../Backend/Firebase';
+import User from '../../States/User';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 
@@ -22,6 +27,12 @@ const MainRankingHeaderComponent: React.FC = () => {
     const [chosenLevel, setChosenLevel] = useRecoilState(ChosenLevel);
 
     const [chosenGenre, setChosenGenre] = useRecoilState(ChosenGenre);
+
+    const user = useRecoilValue(User);
+
+    const resetRank = useResetRecoilState(Ranks);
+
+    const navigate = useNavigate();
     
     const onSaveAs = (uri: string, filename: string) => {
 		var link = document.createElement('a');
@@ -54,6 +65,20 @@ const MainRankingHeaderComponent: React.FC = () => {
 
     const levelChangeHandler = (e:React.ChangeEvent<HTMLSelectElement>) => {
         setChosenLevel(Number.parseInt(e.target.value))
+    }
+
+    const resetData = async () => {
+        const first = window.confirm("저장 데이터가 초기화 됩니다. 초기화 하시겠습니까?");
+
+        if(!first) return;
+
+        if(window.confirm("진짜 데이터를 초기화 하시겠습니까?")) {
+            const auth = getAuth();
+            if(auth.currentUser) {
+                await set(ref(db, `/data/${user.uid}`), "");
+            }
+            document.location.reload();
+        }
     }
 
 
@@ -114,6 +139,7 @@ const MainRankingHeaderComponent: React.FC = () => {
                 <CrownIcon src={donderful}/>
                 <CrownText>{currentRank.filter(item => (item.clear === ClearStatus.전량 && item.level === chosenLevel)).length}</CrownText>
             </ClearDiv>
+            { user.loggedIn && <ResetDiv onClick={resetData}>전체 기록 리셋하기</ResetDiv>}
         </Div>
     )
 }
@@ -159,6 +185,16 @@ const ScreenshotDiv = styled.div`
     margin: 0px 0px 10px 10px;
     font-family: 'taikoLight';
     background-color: antiquewhite;
+    padding: 5px;
+    border-radius: 10px;
+    cursor:pointer;
+`
+
+const ResetDiv = styled.div`
+    display: inline-block;
+    margin-top: 20px;
+    font-family: 'taikoLight';
+    background-color: #e44242;
     padding: 5px;
     border-radius: 10px;
     cursor:pointer;
